@@ -21,12 +21,10 @@
         <button>修改头像</button>
       </div>
       <ul class="user-list">
-        <li><p>姓名： {{name}}</p></li>
-        <li><p>性别： {{name}}</p></li>
-        <li><p>年龄： {{name}}</p></li>
-        <li><p>体重： {{name}}</p></li>
-        <li><p>身高： {{name}}</p></li>
-        <li><p>血糖： {{name}}</p></li>
+        <li><span class="left">姓名： {{user.name}}</span> <span class="right">性别:  {{user.sex}}</span></li>
+        <li><span class="left">性别： {{user.sex}}</span> <span class="right">体重： {{user.weight}}</span></li>
+        <li><span class="left">年龄： {{user.age}}</span> <span class="right">血糖： {{user.bloodSugar}}</span></li>
+        <li><span class="left">身高： {{user.height}}</span> <span class="right">血压： {{user.blood}}</span></li>
       </ul>
     </div>
 
@@ -40,7 +38,15 @@
     data () {
       return {
         name: '李振东',
-        sex: '',
+        user: {
+          name: '用户',
+          sex: '男',
+          weight: '140kg',
+          height: '180cm',
+          age: '28',
+          bloodSugar: '100',
+          blood: '130',
+        },
       }
     },
 
@@ -136,21 +142,36 @@
   }
 
   .user-message {
-    width: 350px;
+    width: 450px;
     margin: 50px auto;
     padding-top: 100px;
   }
 
 
   .user-list {
-    width: 250px;
-    margin: 20px auto;
+    width: 100%;
+    margin: 50px auto;
   }
   .user-list li {
     width: 100%;
     height: auto;
     text-align: center;
-    font-size: 16px;
     line-height: 20px;
+    overflow: hidden;
+    margin-top: 18px;
+    padding: 0 20px;
+    text-align: center;
+  }
+  .left {
+    float: left;
+  }
+  .right {
+    float: right;
+  }
+  .user-list li span {
+    display: block;
+    font-size: 20px;
+    width: 50%;
+    text-align: center;
   }
 </style>
