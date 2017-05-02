@@ -9,45 +9,27 @@
         <li class="nav-item">
           折线图
         </li>
-        <li class="nav-item">
+        <li class="nav-item" @click="goNext('member')">
           个人中心
         </li>
       </ul>
     </header>
-
-    <div class="user-message">
-      <div class="user-header">
-        <img src="https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/a833e6b2a1e69c89e889b2e5bda9e79a84e68891e5928c793e" alt="">
-        <button>修改头像</button>
-      </div>
-      <ul class="user-list">
-        <li><span class="left">姓名： {{user.name}}</span> <span class="right">性别:  {{user.sex}}</span></li>
-        <li><span class="left">性别： {{user.sex}}</span> <span class="right">体重： {{user.weight}}</span></li>
-        <li><span class="left">年龄： {{user.age}}</span> <span class="right">血糖： {{user.bloodSugar}}</span></li>
-        <li><span class="left">身高： {{user.height}}</span> <span class="right">血压： {{user.blood}}</span></li>
-      </ul>
+    <div class="content">
+      <router-view></router-view>
     </div>
-
   </div>
-
-
 </template>
 
 <script>
   export default {
     data () {
       return {
-        name: '李振东',
-        user: {
-          name: '用户',
-          sex: '男',
-          weight: '140kg',
-          height: '180cm',
-          age: '28',
-          bloodSugar: '100',
-          blood: '130',
-        },
       }
+    },
+    methods: {
+      goNext: function (path) {
+        this.$router.push({path: path})
+      },
     },
 
   }
@@ -60,6 +42,7 @@
     display: block;
     background-size: cover;
     background: url("./assets/timg.jpeg") repeat;
+    padding-top: 50px;
   }
 
 
@@ -116,62 +99,8 @@
   .header-nav li :hover {
     border-color: #333;
   }
-  /*用户信息*/
-  .user-message {
-
-  }
-  .user-header img {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    display: block;
-    margin: 0 auto;
-  }
-  .user-header button {
-    border-radius: 4px;
-    font-size: 14px;
-    padding: 0 12px;
-    line-height: 20px;
-    border: 1px solid #eee;
-    margin: 20px auto;
-    display: block;
-    background: transparent;
-  }
-  .user-header button:focus {
-    outline: none;
-  }
-
-  .user-message {
-    width: 450px;
-    margin: 50px auto;
-    padding-top: 100px;
-  }
-
-
-  .user-list {
+  .content {
     width: 100%;
-    margin: 50px auto;
-  }
-  .user-list li {
-    width: 100%;
-    height: auto;
-    text-align: center;
-    line-height: 20px;
-    overflow: hidden;
-    margin-top: 18px;
-    padding: 0 20px;
-    text-align: center;
-  }
-  .left {
-    float: left;
-  }
-  .right {
-    float: right;
-  }
-  .user-list li span {
-    display: block;
-    font-size: 20px;
-    width: 50%;
-    text-align: center;
+    height: 100%;
   }
 </style>
