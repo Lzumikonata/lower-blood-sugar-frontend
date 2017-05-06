@@ -3,7 +3,8 @@ import Router from 'vue-router'
 import Hello from '../components/Hello'
 import Login from '../components/Login'
 import Member from '../components/Member'
-
+import Register from '../components/Register.vue'
+import Modify from '../components/Modify'
 Vue.use(Router)
 
 export default new Router({
@@ -22,6 +23,16 @@ export default new Router({
       path: '/member',
       name: '会员中心',
       component: Member,
+    },
+    {
+      path: '/register',
+      name: 'zhuce',
+      component: Register,
+    },
+    {
+      path: '/modify',
+      name: 'xiugai',
+      component: Modify,
     },
   ],
 })

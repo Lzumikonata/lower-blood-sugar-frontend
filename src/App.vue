@@ -56,6 +56,7 @@
     right: 0;
     top: 0;
     overflow: hidden;
+    background-color: rgba(0,0,0,0.1);
     padding: 0 40px;
     border-bottom: 1px solid #eee;
     font-family: "Helvetica Neue", Helvetica, sans-serif;
@@ -86,7 +87,7 @@
     border-radius: 4px;
     background: transparent;
     font-size: 14px;
-    color: #ccc;
+    color: #666;
     margin-left: 12px;
     font-weight: 300;
     border: 1px solid #eee;

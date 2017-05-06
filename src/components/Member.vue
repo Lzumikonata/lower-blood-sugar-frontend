@@ -6,18 +6,17 @@
     </div>
     <ul class="user-list">
       <li><span class="left">姓名： {{user.name}}</span> <span class="right">性别:  {{user.sex}}</span></li>
-      <li><span class="left">性别： {{user.sex}}</span> <span class="right">体重： {{user.weight}}</span></li>
+      <li><span class="left">运动量： {{user.sport}}</span> <span class="right">体重： {{user.weight}}</span></li>
       <li><span class="left">年龄： {{user.age}}</span> <span class="right">血糖： {{user.bloodSugar}}</span></li>
       <li><span class="left">身高： {{user.height}}</span> <span class="right">血压： {{user.blood}}</span></li>
     </ul>
+    <button class="user-change" @click="goModify('modify')">修改资料</button>
   </div>
 </template>
-
 <script>
   export default {
     data () {
       return {
-        name: '李振东',
         user: {
           name: '用户',
           sex: '男',
@@ -26,15 +25,19 @@
           age: '28',
           bloodSugar: '100',
           blood: '130',
+          sport: '1km',
         },
       }
     },
-
+    methods: {
+      goModify: function (path) {
+        this.$router.push({path: path})
+      },
+    },
   }
 </script>
 
 <style scoped>
-
   .header-nav li {
     float: left;
     height: 34px;
@@ -57,9 +60,6 @@
     border-color: #333;
   }
   /*用户信息*/
-  .user-message {
-
-  }
   .user-header img {
     border-radius: 50%;
     width: 100px;
@@ -72,7 +72,7 @@
     font-size: 14px;
     padding: 0 12px;
     line-height: 20px;
-    border: 1px solid #eee;
+    border: 1px solid white;
     margin: 20px auto;
     display: block;
     background: transparent;
@@ -112,6 +112,15 @@
     display: block;
     font-size: 20px;
     width: 50%;
-    text-align: center;
+    text-align: left;
+  }
+  .user-change{
+    display: block;
+    padding:8px 20px;
+    line-height: 12px;
+    background-color: transparent;
+    border:1px solid white;
+    border-radius:4px ;
+    margin:20px auto;
   }
 </style>

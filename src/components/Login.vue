@@ -7,11 +7,11 @@
       <div class="LoginWord">
         <p>登录你的账号</p>
       </div>
-      <input id="UserName" type="text" v-model="username"><br>
-      <input id="PassWord" type="password" v-model="password"><br>
+      <input id="UserName" type="text" placeholder="请输入用户名" v-model="username"><br>
+      <input id="PassWord" type="password" placeholder="请输入密码" v-model="password"><br>
       <div id="login-tools">
         <a class="loginbtn" @click="login">登录</a>
-        <a class="register" href="LoginPage.html">注册</a>
+        <a class="registerpage" @click="goRegister('register')">注册</a>
       </div>
     </div>
   </div>
@@ -25,6 +25,7 @@
         msg: '湖北文理学院',
         username: '',
         password: '',
+        phone: '',
       }
     },
     methods: {
@@ -35,12 +36,28 @@
         if (!this.password) {
           return alert('密码不能为空')
         }
+//        fetch('http://wittsay.cc/v1/session', {
+//          method: 'POST',
+//          mode: 'cors',
+//          redirect: 'follow',
+//          body: JSON.stringify({
+//            email: this.username,
+//            password: this.password,
+//          }),
+//        }).then(res => {
+//          return res.json()
+//        }).then(json => {
+//          alert(json.message)
+//        })
         this.$router.push({
           path: 'member',
           params: {
             username: this.username,
           },
         })
+      },
+      goRegister: function (path) {
+        this.$router.push({path: path})
       },
     },
   }
@@ -108,14 +125,14 @@
     border: 1px solid #67bdcd;
   }
 
-  .register {
+  .registerpage {
     color: darkgray;
     background: #fff;
     border: darkgray;
     transition: all .25s;
   }
 
-  .register:hover {
+  .registerpage:hover {
     color: darkgray;
     background-color: gray;
     border: 1px solid darkgrey;
