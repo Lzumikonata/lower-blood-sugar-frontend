@@ -1,0 +1,132 @@
+<template>
+  <div id="app">
+    <header class="home-header">
+      <a class="header-title">糖尿病饮食管理</a>
+      <ul class="header-nav">
+        <li class="nav-item" @click="goNext('/foodlist')" v-if="isAdmin">
+          食物管理
+        </li>
+        <li class="nav-item" @click="goHello('/')">
+          吃了什么
+        </li>
+        <li class="nav-item" @click="goHistoryadd('historyadd')">
+          折线图
+        </li>
+        <li class="nav-item" @click="goNext('member')">
+          个人中心
+        </li>
+      </ul>
+    </header>
+    <div class="content">
+      <router-view></router-view>
+    </div>
+  </div>
+</template>
+
+<script>
+  import {API} from './services/api'
+  import swal from 'sweetalert'
+  export default {
+    data: () => ({
+      isAdmin: false
+    }),
+    mounted() {
+      API.get('session')
+        .then(user =>{
+          // 未登录跳转登录页
+          if (!user || !user.id) {
+            swal('身份验证失败...', '请先前往登录页登录！', 'error')
+            return this.$router.push({path: 'login'})
+          }
+          if (user && user.userType === "admin") {
+            this.isAdmin = true
+          }
+          this.user = Object.assign({}, this.user, user)
+        })
+    },
+    methods: {
+      goNext: function (path) {
+        this.$router.push({ path: path })
+      },
+      goHello: function (path) {
+        this.$router.push({ path: path })
+      },
+      goHistoryadd: function (path) {
+        this.$router.push({ path: path })
+      }
+    },
+
+  }
+</script>
+
+<style scoped>
+  #app {
+    min-height: 100%;
+    width: 100%;
+    display: block;
+    background-size: cover;
+    background: whitesmoke;
+  }
+
+  /*标题和导航*/
+  .home-header {
+    position: fixed;
+    height: 50px;
+    z-index: 99;
+    left: 0;
+    right: 0;
+    top: 0;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0 40px;
+    border-bottom: 1px solid #eee;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+  }
+
+  .header-title {
+    font-size: 18px;
+    display: block;
+    float: left;
+    color: #333;
+    line-height: 50px;
+
+  }
+
+  .header-nav {
+    width: auto;
+    float: right;
+    overflow: hidden;
+    text-decoration: none;
+    margin-top: 7px;
+  }
+
+  .header-nav li {
+    float: left;
+    height: 34px;
+    line-height: 34px;
+    padding: 0 15px;
+    border-radius: 4px;
+    background: transparent;
+    font-size: 14px;
+    color: #666;
+    margin-left: 12px;
+    font-weight: 300;
+    border: 1px solid #eee;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .header-nav li :hover {
+    border-color: #333;
+  }
+
+  .content {
+    width: 100%;
+    min-height: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+</style>
