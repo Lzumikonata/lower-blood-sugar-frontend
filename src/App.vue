@@ -3,6 +3,9 @@
     <header class="home-header">
       <a class="header-title">糖尿病饮食管理</a>
       <ul class="header-nav">
+        <li class="nav-item" @click="goNext('/foodlist')" v-if="isAdmin">
+          食物管理
+        </li>
         <li class="nav-item" @click="goHello('/')">
           吃了什么
         </li>
@@ -21,20 +24,35 @@
 </template>
 
 <script>
+  import {API} from './services/api'
+  import swal from 'sweetalert'
   export default {
-    data () {
-      return {
-      }
+    data: () => ({
+      isAdmin: false
+    }),
+    mounted() {
+      API.get('session')
+        .then(user =>{
+          // 未登录跳转登录页
+          if (!user || !user.id) {
+            swal('身份验证失败...', '请先前往登录页登录！', 'error')
+            return this.$router.push({path: 'login'})
+          }
+          if (user && user.userType === "admin") {
+            this.isAdmin = true
+          }
+          this.user = Object.assign({}, this.user, user)
+        })
     },
     methods: {
       goNext: function (path) {
-        this.$router.push({path: path})
+        this.$router.push({ path: path })
       },
       goHello: function (path) {
-        this.$router.push({path: path})
+        this.$router.push({ path: path })
       },
       goHistoryadd: function (path) {
-        this.$router.push({path: path})
+        this.$router.push({ path: path })
       }
     },
 
@@ -50,8 +68,6 @@
     background: whitesmoke;
   }
 
-
-
   /*标题和导航*/
   .home-header {
     position: fixed;
@@ -61,7 +77,7 @@
     right: 0;
     top: 0;
     overflow: hidden;
-    background-color: rgba(0,0,0,0.1);
+    background-color: rgba(0, 0, 0, 0.1);
     padding: 0 40px;
     border-bottom: 1px solid #eee;
     font-family: "Helvetica Neue", Helvetica, sans-serif;
@@ -102,9 +118,11 @@
     -ms-user-select: none;
     user-select: none;
   }
+
   .header-nav li :hover {
     border-color: #333;
   }
+
   .content {
     width: 100%;
     min-height: 100%;
