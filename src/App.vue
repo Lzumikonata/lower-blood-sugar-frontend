@@ -3,10 +3,10 @@
     <header class="home-header">
       <a class="header-title">糖尿病饮食管理</a>
       <ul class="header-nav">
-        <li class="nav-item">
+        <li class="nav-item" @click="goHello('/')">
           吃了什么
         </li>
-        <li class="nav-item">
+        <li class="nav-item" @click="goHistoryadd('historyadd')">
           折线图
         </li>
         <li class="nav-item" @click="goNext('member')">
@@ -30,6 +30,12 @@
       goNext: function (path) {
         this.$router.push({path: path})
       },
+      goHello: function (path) {
+        this.$router.push({path: path})
+      },
+      goHistoryadd: function (path) {
+        this.$router.push({path: path})
+      }
     },
 
   }
@@ -37,12 +43,11 @@
 
 <style scoped>
   #app {
-    height: 100%;
+    min-height: 100%;
     width: 100%;
     display: block;
     background-size: cover;
-    background: url("./assets/timg.jpeg") repeat;
-    padding-top: 50px;
+    background: whitesmoke;
   }
 
 
@@ -102,6 +107,8 @@
   }
   .content {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
   }
 </style>

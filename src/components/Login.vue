@@ -18,6 +18,9 @@
 </template>
 
 <script>
+  import {API} from '../services/api'
+  import store from 'store'
+  console.log(store.get('user'));
   export default {
     name: 'PagePic',
     data () {
@@ -36,6 +39,24 @@
         if (!this.password) {
           return alert('密码不能为空')
         }
+
+        API.post('session', {
+          email: this.username,
+          password: this.password,
+        }).then(res => {
+          return res.json()
+        }).then(json => {
+          if (json && json.user) {
+            store.set('user', json.user)
+            return this.$router.push({
+              path: 'member',
+              params: {
+                username: this.username,
+              },
+            })
+          }
+          alert(json.message)
+        })
 //        fetch('http://wittsay.cc/v1/session', {
 //          method: 'POST',
 //          mode: 'cors',
@@ -49,12 +70,6 @@
 //        }).then(json => {
 //          alert(json.message)
 //        })
-        this.$router.push({
-          path: 'member',
-          params: {
-            username: this.username,
-          },
-        })
       },
       goRegister: function (path) {
         this.$router.push({path: path})

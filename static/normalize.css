@@ -445,3 +445,7 @@ ul, li {
 button {
 	cursor: pointer;
 }
+
+*, li, ul  {
+	box-sizing: border-box;
+}

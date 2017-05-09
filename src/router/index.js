@@ -5,6 +5,8 @@ import Login from '../components/Login'
 import Member from '../components/Member'
 import Register from '../components/Register.vue'
 import Modify from '../components/Modify'
+import historyAdd from '../components/historyadd.vue'
+import FoodList from '../components/FoodList.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -33,6 +35,16 @@ export default new Router({
       path: '/modify',
       name: 'xiugai',
       component: Modify,
+    },
+    {
+      path: '/historyadd',
+      name: 'everadd',
+      component: historyAdd,
+    },
+    {
+      path: '/foodlist',
+      name: 'foodlist',
+      component: FoodList,
     },
   ],
 })

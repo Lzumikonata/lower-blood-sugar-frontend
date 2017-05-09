@@ -5,29 +5,44 @@
       <button>修改头像</button>
     </div>
     <ul class="user-list">
-      <li><span class="left">姓名： {{user.name}}</span> <span class="right">性别:  {{user.sex}}</span></li>
+      <li><span class="left">姓名： {{user.username}}</span> <span class="right">性别:  {{user.gender}}</span></li>
       <li><span class="left">运动量： {{user.sport}}</span> <span class="right">体重： {{user.weight}}</span></li>
       <li><span class="left">年龄： {{user.age}}</span> <span class="right">血糖： {{user.bloodSugar}}</span></li>
-      <li><span class="left">身高： {{user.height}}</span> <span class="right">血压： {{user.blood}}</span></li>
+      <li><span class="left">身高： {{user.height}}</span> <span class="right">血压： {{user.bloodPressure}}</span></li>
     </ul>
     <button class="user-change" @click="goModify('modify')">修改资料</button>
   </div>
 </template>
 <script>
+  import {API} from '../services/api'
+  import store from 'store'
+
   export default {
     data () {
       return {
         user: {
-          name: '用户',
-          sex: '男',
+          username: '用户',
+          gender: '男',
           weight: '140kg',
           height: '180cm',
           age: '28',
           bloodSugar: '100',
-          blood: '130',
+          bloodPressure: '130',
           sport: '1km',
+          phone: ''
         },
       }
+    },
+    mounted () {
+      API.get('session')
+        .then(res => {
+          console.log(res);
+        })
+//      const user = store.get('user')
+//      if (!user) {
+//        return alert('您未登录，请前往登录！')
+//      }
+//      this.user = user
     },
     methods: {
       goModify: function (path) {

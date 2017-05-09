@@ -21,6 +21,7 @@
       <li><label>用户名</label><input type="text" placeholder="请输入用户名"></li>
       <li><label>密码</label><input type="text" placeholder="请设置密码"></li>
       <li><label>邮箱</label><input type="text" placeholder="请输入邮箱"></li>
+      <li><label>电话</label><input type="text" placeholder="请输入电话"></li>
     </ul>
     <button class="register-button">注册</button>
   </div>
@@ -57,42 +58,52 @@
   }
   .to-Login button:hover{
     background-color: rgba(0,0,0,0.1);
+    color: white;
   }
   .message-input{
     margin-top: 100px;
-    display: block;
+    width:100%;
+    overflow: hidden;
   }
   .message-input input{
     width:328px;
-    height:32px;
-    margin-top:18px;
+    height:40px;
+    margin-top:30px;
     margin-left:15px;
     font-size: 14px;
+    border-radius: 4px;
+    border:1px solid #ddd;
+    padding-left:7px;
   }
   .message-input label{
     display: block;
     float:left;
     width:65px;
-    height:32px;
+    height:40px;
     text-align: right;
-    line-height: 32px;
-    margin-top: 24px;
-    margin-left: 28px;
-    color:#666
+    font-size: 16px;
+    line-height: 38px;
+    color:#666;
+    margin-top: 30px;
+    margin-left: 33px;
+
   }
   .register-button{
     display:block;
-    margin-top:24px;
+    margin-top:30px;
     padding:7px 150px;
     margin-left: 107px;
     font-size: 17px;
-    color: white;
+    color: darkgrey;
     background: transparent;
-    border:1px solid white;
+    border:1px solid darkgrey;
     cursor: pointer;
+    border-radius: 4px;
   }
   .register-button:hover{
     background-color: rgba(0,0,0,0.1);
+    color:white;
+    border:white;
   }
 
 </style>
