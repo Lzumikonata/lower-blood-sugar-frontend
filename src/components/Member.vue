@@ -5,10 +5,10 @@
       <button>修改头像</button>
     </div>
     <ul class="user-list">
-      <li><span class="left">姓名： {{user.username}}</span> <span class="right">性别:  {{user.gender}}</span></li>
+      <li><span class="left">姓名： {{user.username}}</span> <span class="right">性别:  {{user.gender === 'man' ? '男' : '女'}}</span></li>
       <li><span class="left">运动量： {{user.sport}}</span> <span class="right">体重： {{user.weight}}</span></li>
-      <li><span class="left">年龄： {{user.age}}</span> <span class="right">血糖： {{user.bloodSugar}}</span></li>
-      <li><span class="left">身高： {{user.height}}</span> <span class="right">血压： {{user.bloodPressure}}</span></li>
+      <li><span class="left">年龄： {{user.age }}</span> <span class="right">血糖： {{user.bloodSugar}}</span></li>
+      <li><span class="left">身高： {{user.height + ' cm'}}</span> <span class="right">血压： {{user.bloodPressure}}</span></li>
     </ul>
     <button class="user-change" @click="goModify('modify')">修改资料</button>
   </div>
@@ -22,7 +22,7 @@
       return {
         user: {
           username: '用户',
-          gender: '男',
+          gender: 'man',
           weight: '140kg',
           height: '180cm',
           age: '28',
@@ -35,8 +35,10 @@
     },
     mounted () {
       API.get('session')
-        .then(res => {
-          console.log(res);
+        .then(user => {
+          if (user && user.id) {
+            this.user = user
+          }
         })
 //      const user = store.get('user')
 //      if (!user) {

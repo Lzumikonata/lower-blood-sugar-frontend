@@ -13,6 +13,7 @@
         bloodPressure: '',
         age: '',
         email: '',
+        height: '',
       },
     }),
     mounted() {
@@ -59,6 +60,7 @@
       <li><label>年龄</label><input type="text" name="user-date" v-model="user.age"></li>
       <li><label>血糖</label><input type="text" v-model="user.bloodSugar"> mmol/L</li>
       <li><label>血压</label><input type="text" v-model="user.bloodPressure"> mmHg</li>
+      <li><label>身高</label><input type="text" v-model="user.height"> cm</li>
       <!--<li><label>运动量</label><select name="sportdegree">-->
         <!--<option value="light">1~2.5kg</option>-->
         <!--<option value="moderate">2.6~5kg</option>-->
