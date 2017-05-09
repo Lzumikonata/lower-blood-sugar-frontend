@@ -20,7 +20,6 @@
 <script>
   import { API } from '../services/api'
   import store from 'store'
-  console.log(store.get('user'));
   export default {
     name: 'PagePic',
     data () {

@@ -46,4 +46,21 @@ export const API = {
         return res.json();
       });
   },
+  delete: (url, body) => {
+    return window.fetch(`${HOST}${url}`, {
+      method: "DELETE",
+      mode: "cors",
+      redirect: "follow",
+      headers: {
+        authorization: store.get("user") && store.get("user").clientToken,
+      },
+      body: JSON.stringify(body),
+    })
+      .then(res => {
+        if (res.status == 200 || res.status == 204) {
+          return {message: 'ok'}
+        }
+        return res.json();
+      });
+  },
 };
