@@ -48,7 +48,7 @@
       <tr>
         <th>时间</th>
         <th>今日摄入热量</th>
-        <th>tips</th>
+        <th>医生建议</th>
         <th>了解详细</th>
       </tr>
       </thead>
@@ -56,8 +56,12 @@
       <tr v-for="d in diets">
         <td>{{d.createdAt | formatTime}}</td>
         <td>{{d.energy}}</td>
-        <td>{{d.inquiry ? d.inquiry : '暂无建议'}}</td>
-        <td><button>详情</button></td>
+        <td>{{d.suggest ? d.suggest : '暂无建议'}}</td>
+        <td>
+          <ul v-if="d.foods && d.foods.length">
+            <li v-for="f in d.foods">{{f.name}} - {{f.energy}}</li>
+          </ul>
+        </td>
       </tr>
       </tbody>
     </table>

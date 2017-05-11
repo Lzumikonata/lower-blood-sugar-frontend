@@ -3,6 +3,9 @@
     <header class="home-header">
       <a class="header-title" @click="goNext('')">糖尿病饮食管理</a>
       <ul class="header-nav">
+        <li class="nav-item" @click="goNext('/dietlist')" v-if="isAdmin">
+          食物管理
+        </li>
         <li class="nav-item" @click="goNext('/foodlist')" v-if="isAdmin">
           食物管理
         </li>
