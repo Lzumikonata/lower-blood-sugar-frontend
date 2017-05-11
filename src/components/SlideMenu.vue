@@ -8,15 +8,39 @@
     },
     data: () => ({
       slideToggle: false,
-      filterFoods: [],
     }),
     mounted () {
-      console.log(this.foods);
+    },
+    computed: {
+      filterFoods: function() {
+        return this.foods
+      }
     },
     methods: {
       toggleView () {
         this.slideToggle = !this.slideToggle
       },
+      count(isAdd, index) {
+        console.log(index);
+        this.foods = this.foods.map((v, i) => {
+          if (i === index){
+            isAdd? v.num++: (v.num <= 0? v.num = 0: v.num--)
+          }
+          return v
+        })
+      },
+      submit() {
+        let newFoods = []
+        this.foods.forEach(food => {
+          if (food.num > 0){
+            newFoods.push(food.id)
+          }
+        })
+        if (newFoods.length === 0){
+          return alert("没有食物");
+        }
+      },
+
     },
   }
 </script>
@@ -30,20 +54,20 @@
         <h2>已添加的饮食：</h2>
       </div>
       <ul class="addfood-list">
-        <li v-for="food in foods" v-if="food.num > 0">
+        <li v-for="(food, index) in filterFoods" v-if="food.num > 0">
           <div class="addfood-list-name">
             <span>{{food.name}}</span>
-            <span>100</span>
+            <span>{{food.energy}}</span>
           </div>
           <div class="addfood-list-count">
-            <span class="add">+</span>
+            <span class="add" @click="count(true, index)">+</span>
             <span class="val">{{food.num}}</span>
-            <span class="minus">-</span>
+            <span class="minus" @click="count(false, index)">-</span>
           </div>
         </li>
       </ul>
       <div class="addfood-btn">
-        <button class="submit">submit</button>
+        <button class="submit" @click="submit">完成</button>
       </div>
     </div>
   </div>
@@ -83,9 +107,9 @@
     color: #ccc;
     padding:10px 5px;
     line-height: 20px;
-    border-top: 2px solid grey;
-    border-bottom: 2px solid grey;
+    border: 1px solid grey;
     margin-top: 250px;
+    text-align: center;
   }
   .addfood {
     height:100%;

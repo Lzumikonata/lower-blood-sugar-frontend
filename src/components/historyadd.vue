@@ -73,6 +73,7 @@
       <span>下一页</span>
       <span>(共33页)</span>
     </div>
+    <div class="details"></div>
   </div>
 </template>
 

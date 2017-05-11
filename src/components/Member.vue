@@ -1,4 +1,6 @@
 <template>
+  <div class="content">
+    <p>要记得及时更新自己资料,方便医生查看喔~</p>
   <div class="user-message">
     <div class="user-header">
       <img src="https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/a833e6b2a1e69c89e889b2e5bda9e79a84e68891e5928c793e" alt="">
@@ -6,11 +8,12 @@
     </div>
     <ul class="user-list">
       <li><span class="left">姓名： {{user.username}}</span> <span class="right">性别:  {{user.gender === 'man' ? '男' : '女'}}</span></li>
-      <li><span class="left">运动量： {{user.sport}}</span> <span class="right">体重： {{user.weight}}</span></li>
-      <li><span class="left">年龄： {{user.age }}</span> <span class="right">血糖： {{user.bloodSugar}}</span></li>
-      <li><span class="left">身高： {{user.height + ' cm'}}</span> <span class="right">血压： {{user.bloodPressure}}</span></li>
+      <li><span class="left">目标摄入：{{user.target}}</span> <span class="right">体重： {{user.weight + ' kg'}}</span></li>
+      <li><span class="left">年龄： {{user.age }}</span> <span class="right">血糖： {{user.bloodSugar + ' mmlo/L'}}</span></li>
+      <li><span class="left">身高： {{user.height + ' cm'}}</span> <span class="right">血压： {{user.bloodPressure + ' mmHg'}}</span></li>
     </ul>
     <button class="user-change" @click="goModify('modify')">修改资料</button>
+  </div>
   </div>
 </template>
 <script>
@@ -21,15 +24,14 @@
     data () {
       return {
         user: {
-          username: '用户',
+          username: '',
           gender: 'man',
-          weight: '140kg',
-          height: '180cm',
-          age: '28',
-          bloodSugar: '100',
-          bloodPressure: '130',
-          sport: '1km',
-          phone: ''
+          weight: '',
+          height: '',
+          age: '',
+          bloodSugar: '',
+          bloodPressure: '',
+          target: ''
         },
       }
     },
@@ -55,6 +57,12 @@
 </script>
 
 <style scoped>
+  .content {
+    background: url('../assets/timg.jpeg') no-repeat;
+  }
+  .content p{
+    text-align: center;
+  }
   .header-nav li {
     float: left;
     height: 34px;
@@ -101,7 +109,8 @@
   .user-message {
     width: 450px;
     margin: 50px auto;
-    padding-top: 100px;
+    padding-top: 80px;
+    background-color: rgba(255,255,255,0.3);
   }
 
 
@@ -116,7 +125,7 @@
     line-height: 20px;
     overflow: hidden;
     margin-top: 18px;
-    padding: 0 20px;
+    padding: 2px 20px;
     text-align: center;
   }
   .left {
@@ -133,11 +142,11 @@
   }
   .user-change{
     display: block;
-    padding:8px 20px;
+    padding:13px 20px;
     line-height: 12px;
     background-color: transparent;
-    border:1px solid white;
+    border:1px solid transparent;
     border-radius:4px ;
-    margin:20px auto;
+    margin:50px auto;
   }
 </style>

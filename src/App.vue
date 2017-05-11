@@ -1,15 +1,15 @@
 <template>
   <div id="app">
     <header class="home-header">
-      <a class="header-title">糖尿病饮食管理</a>
+      <a class="header-title" @click="goNext('')">糖尿病饮食管理</a>
       <ul class="header-nav">
         <li class="nav-item" @click="goNext('/foodlist')" v-if="isAdmin">
           食物管理
         </li>
-        <li class="nav-item" @click="goHello('/')">
+        <li class="nav-item" @click="goNext('/')">
           吃了什么
         </li>
-        <li class="nav-item" @click="goHistoryadd('historyadd')">
+        <li class="nav-item" @click="goNext('historyadd')">
           折线图
         </li>
         <li class="nav-item" @click="goNext('member')">
@@ -48,12 +48,6 @@
       goNext: function (path) {
         this.$router.push({ path: path })
       },
-      goHello: function (path) {
-        this.$router.push({ path: path })
-      },
-      goHistoryadd: function (path) {
-        this.$router.push({ path: path })
-      }
     },
 
   }

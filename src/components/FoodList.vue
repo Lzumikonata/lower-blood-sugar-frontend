@@ -102,8 +102,8 @@
         <thead>
         <th>预览图片</th>
         <th>食物名称</th>
-        <th>热量</th>
-        <th>tips</th>
+        <th>热量 /100g</th>
+        <th class="suggestion">tips</th>
         <th>删除食物</th>
         <th>修改</th>
         </thead>
@@ -116,7 +116,7 @@
           <td>{{ f.energy }}</td>
           <td>{{ f.describe ? f.describe : '暂无建议' }}</td>
           <td>
-            <button @click="deleteFood(f.id)">{{ '删除' + f.name }}</button>
+            <button class="deletebtn" @click="deleteFood(f.id)">{{ '删除' + f.name }}</button>
           </td>
           <td>
             <button>修改</button>
@@ -157,9 +157,9 @@
   .food-add {
     padding: 8px 15px;
     border-radius: 4px;
-    border: 1px solid darkgrey;
-    color: darkgrey;
-    background-color: white;
+    border: 1px solid white;
+    color: white;
+    background-color: #27ae60;
     font-size: 18px;
     font-weight: lighter;
     line-height: 18px;
@@ -207,7 +207,18 @@
   .foodlist th {
     background-color: #ddd;
   }
-
+  .suggestion{
+    width: 150px;
+  }
+  .deletebtn{
+    width: 80px;
+    height: 45px;
+    background-color: #27ae60;
+    border:1px solid white;
+    color: white;
+    border-radius: 4px;
+    font-weight: lighter;
+  }
   .turn-page-two {
     text-align: center;
   }
@@ -256,7 +267,9 @@
     font-size: 15px;
     padding: 5px 12px;
     border-radius: 4px;
-    border: 1px solid #666;
+    border: 1px solid transparent;
+    float: right;
+    background-color: transparent;
   }
   .food-add-list {
     width: 400px;
@@ -268,7 +281,6 @@
     float: left;
     margin-top: 39px;
     margin-left: 20px;
-
   }
 
   .food-add-list li input {
@@ -288,10 +300,17 @@
   }
   .save {
     font-size: 15px;
-    padding: 5px 12px;
+    padding: 5px 60px;
     border-radius: 4px;
     border: 1px solid #666;
+    float: right;
+    margin-right: 325px;
+    background-color: transparent;
   }
+  .save:hover{
+    background-color: #333;
+  }
+
 
 
 </style>
