@@ -24,6 +24,7 @@
 <script>
   import SlideMenu from './SlideMenu.vue'
   import {API} from '../services/api.js'
+  import swal from 'sweetalert'
   export default {
     components: {
       SlideMenu,
@@ -32,6 +33,7 @@
       search: '',
       myData: [],
       serverFoods: [],
+      keyword: '',
     }),
     mounted () {
       API.get('foods')
@@ -54,9 +56,6 @@
         })
       },
       searchInput: function(key) {
-         API.get ('foods/${keyword}/search')
-           .then(
-           )
       },
       goNext(path) {
         this.$router.push({path: path})

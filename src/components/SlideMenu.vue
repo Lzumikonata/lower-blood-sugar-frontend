@@ -1,4 +1,6 @@
 <script>
+  import {API} from '../services/api.js'
+  import swal from 'sweetalert'
   export default {
     props: {
       foods: {
@@ -8,6 +10,8 @@
     },
     data: () => ({
       slideToggle: false,
+      time: 'breakfast',
+      inquiry: '',
     }),
     mounted () {
     },
@@ -21,8 +25,7 @@
         this.slideToggle = !this.slideToggle
       },
       count(isAdd, index) {
-        console.log(index);
-        this.foods = this.foods.map((v, i) => {
+        const foods = this.foods.map((v, i) => {
           if (i === index){
             isAdd? v.num++: (v.num <= 0? v.num = 0: v.num--)
           }
@@ -39,6 +42,21 @@
         if (newFoods.length === 0){
           return alert("没有食物");
         }
+        API.post('diet', {
+          foods: newFoods,
+          time: this.time,
+          inquiry: this.inquiry,
+        })
+          .then(json => {
+            if (json && json.id) {
+              // 重置数据
+              this.foods.forEach(food => {
+                food.num = 0
+              })
+              swal('提交成功', '您的信息已经被记录！', 'success')
+              return this.$router.push({path: 'historyadd'})
+            }
+          })
       },
 
     },
