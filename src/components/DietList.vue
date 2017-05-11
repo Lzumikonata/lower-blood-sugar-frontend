@@ -4,7 +4,8 @@
   export default {
     components: {},
     data: () => ({
-      diets: []
+      diets: [],
+      total: 0,
     }),
     mounted() {
       API.get('session')
@@ -19,7 +20,11 @@
           }
           this.user = Object.assign({}, this.user, res)
         })
-      API.get('diets')
+      API.getNative('diets')
+        .then(res => {
+          this.total = res.headers.get('total')
+          return res.json()
+        })
         .then(json => {
           if (json && json.length) {
             this.diets = json.map(v => {
@@ -100,7 +105,7 @@
         <button>上一页</button>
         <span>第 1 页</span>
         <button>下一页</button>
-        <p>总页数（20）</p>
+        <span>(共{{~~(total / 14) + 1}}页)</span>
       </div>
     </div>
   </div>

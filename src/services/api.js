@@ -56,6 +56,17 @@ export const API = {
         return res.json();
       });
   },
+  putNative: (url, body) => {
+    return window.fetch(`${HOST}${url}`, {
+      method: "PUT",
+      mode: "cors",
+      redirect: "follow",
+      headers: {
+        authorization: store.get("user") && store.get("user").clientToken,
+      },
+      body: JSON.stringify(body),
+    })
+  },
   delete: (url, body) => {
     return window.fetch(`${HOST}${url}`, {
       method: "DELETE",
