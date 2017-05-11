@@ -2,7 +2,7 @@
  * Created by wuke on 2017/5/9.
  */
 import store from "store";
-const HOST = "http://docker.cc:8888/v1/";
+const HOST = "http://127.0.0.1:1337/v1/";
 
 export const API = {
   get: (url) => {

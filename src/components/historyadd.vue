@@ -1,11 +1,36 @@
 <script>
+  import {API} from '../services/api.js'
+  import swal from 'sweetalert'
+
   export default {
     components: {},
     data () {
       return {
-        turn: {
-        },
+        diets: [],
      }
+    },
+    mounted() {
+      API.get('diet')
+        .then(json => {
+          if (json && json.length) {
+            return this.diets = json.map(v => {
+              let energy = 0
+              if (v.foods && v.foods.length) {
+                v.foods.forEach(f => {
+                  energy += f.energy * f.num
+                })
+              }
+              v.energy = energy
+              return v
+            })
+          }
+          swal('暂无信息', '没有查询到与您有关的饮食信息！', 'error')
+        })
+    },
+    filters: {
+      formatTime(str) {
+        return str.split('T')[0] + ' / ' + str.split('T')[1].substr(0, 8)
+      },
     },
   }
 </script>
@@ -23,47 +48,11 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>1</td>
-        <td>100</td>
-        <td>hao</td>
-        <td><a>详情</a></td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>2000</td>
-        <td>hao</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>1000</td>
-        <td>hao</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>1000</td>
-        <td>hao</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>1000</td>
-        <td>hao</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>1000</td>
-        <td>hao</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>1000</td>
-        <td>hao</td>
-        <td></td>
+      <tr v-for="d in diets">
+        <td>{{d.createdAt | formatTime}}</td>
+        <td>{{d.energy}}</td>
+        <td>{{d.inquiry ? d.inquiry : '暂无建议'}}</td>
+        <td><button>详情</button></td>
       </tr>
       </tbody>
     </table>

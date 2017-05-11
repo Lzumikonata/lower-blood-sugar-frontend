@@ -36,7 +36,10 @@
         let newFoods = []
         this.foods.forEach(food => {
           if (food.num > 0){
-            newFoods.push(food.id)
+            newFoods.push({
+              id: food.id,
+              num: food.num,
+            })
           }
         })
         if (newFoods.length === 0){
