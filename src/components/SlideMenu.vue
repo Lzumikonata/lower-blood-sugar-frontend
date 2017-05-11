@@ -45,6 +45,7 @@
         if (newFoods.length === 0){
           return alert("没有食物");
         }
+
         API.post('diet', {
           foods: newFoods,
           time: this.time,

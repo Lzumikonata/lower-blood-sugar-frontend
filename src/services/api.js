@@ -18,6 +18,16 @@ export const API = {
         return res.json();
       });
   },
+  getNative: (url) => {
+    return window.fetch(`${HOST}${url}`, {
+      method: "GET",
+      mode: "cors",
+      redirect: "follow",
+      headers: {
+        authorization: store.get("user") && store.get("user").clientToken,
+      },  //从store中获取用户的token
+    })
+  },
   post: (url, body) => {
     return window.fetch(`${HOST}${url}`, {
       method: "POST",

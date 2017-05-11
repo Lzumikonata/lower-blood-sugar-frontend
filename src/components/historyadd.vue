@@ -7,12 +7,17 @@
     data () {
       return {
         diets: [],
+        total: 0,
      }
     },
     mounted() {
-      API.get('diet')
+      API.getNative('diet')
+        .then(res => {
+          this.total = res.headers.get('total')
+          return res.json()
+        })
         .then(json => {
-          if (json && json.length) {
+        if (json && json.length) {
             return this.diets = json.map(v => {
               let energy = 0
               if (v.foods && v.foods.length) {
@@ -60,7 +65,7 @@
       <span>上一页</span>
       <span>第 1 页</span>
       <span>下一页</span>
-      <span>(共33页)</span>
+      <span>(共{{~~(total / 14) + 1}}页)</span>
     </div>
     <div class="details"></div>
   </div>
