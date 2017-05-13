@@ -3,7 +3,7 @@
     <SlideMenu :foods="serverFoods"></SlideMenu>
     <div class="search-container">
       <input type="text" class="search-box" v-model="keyword" placeholder="搜索食物">
-      <button @click="searchInput(keyword)">搜索</button>
+      <button class="search-btn" @click="searchInput(keyword)">搜索</button>
       <a class="history" @click="goNext('historyadd')">查看历史纪录</a>
     </div>
     <fieldset class="food-title">添加今日饮食</fieldset>
@@ -95,6 +95,10 @@
     background: white;
     border: 1px solid #e5e5e5;
   }
+  .search-btn:hover{
+    background-color: #27ae60;
+    color: white;
+  }
 
   .food-list {
     width: 900px;
@@ -161,6 +165,7 @@
     margin-top: 20px;
     text-align: center;
     border: 1px solid #e5e5e5;
+    background: url("../assets/titlebac.jpg");
   }
 
   .history {

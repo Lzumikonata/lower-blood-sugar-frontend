@@ -124,7 +124,7 @@
     border-radius: 4px;
     border: 1px solid white;
     color: white;
-    background-color: #27ae60;
+    background-color: red;
     font-size: 18px;
     font-weight: lighter;
     line-height: 18px;

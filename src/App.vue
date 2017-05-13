@@ -4,16 +4,16 @@
       <a class="header-title" @click="goNext('')">糖尿病饮食管理</a>
       <ul class="header-nav">
         <li class="nav-item" @click="goNext('/dietlist')" v-if="isAdmin">
-          食物管理
+          添加建议
         </li>
         <li class="nav-item" @click="goNext('/foodlist')" v-if="isAdmin">
           食物管理
         </li>
         <li class="nav-item" @click="goNext('/')">
-          吃了什么
+          食物查询
         </li>
         <li class="nav-item" @click="goNext('historyadd')">
-          折线图
+          饮食纪录
         </li>
         <li class="nav-item" @click="goNext('member')">
           个人中心
@@ -62,13 +62,12 @@
     width: 100%;
     display: block;
     background-size: cover;
-    background: whitesmoke;
   }
 
   /*标题和导航*/
   .home-header {
     position: fixed;
-    height: 50px;
+    height: 65px;
     z-index: 99;
     left: 0;
     right: 0;
@@ -78,13 +77,14 @@
     padding: 0 40px;
     border-bottom: 1px solid #eee;
     font-family: "Helvetica Neue", Helvetica, sans-serif;
+    background: url("./assets/titlebac.jpg") center;
   }
 
   .header-title {
-    font-size: 18px;
+    font-size: 20px;
     display: block;
     float: left;
-    color: #333;
+    color: #27ae60;
     line-height: 50px;
 
   }
@@ -103,12 +103,11 @@
     line-height: 34px;
     padding: 0 15px;
     border-radius: 4px;
-    background: transparent;
     font-size: 14px;
-    color: #666;
+    color: #27ae60;
     margin-left: 12px;
     font-weight: 300;
-    border: 1px solid #eee;
+    border: 1px solid #e5e5e5;
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -116,8 +115,9 @@
     user-select: none;
   }
 
-  .header-nav li :hover {
-    border-color: #333;
+  .nav-item:hover {
+    border-color: white;
+    background-color: rgba(0,0,0,0.2) ;
   }
 
   .content {

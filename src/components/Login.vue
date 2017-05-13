@@ -1,7 +1,8 @@
 <template>
   <div id="LoginPage">
-    <div id="PagePic">
-      <h1>{{msg}}</h1>
+    <div class="PagePic">
+      <a href="http://www.hbuas.edu.cn/"><img src="../assets/hwlogo.jpg"/></a>
+      <p>{{msg}}</p>
     </div>
     <div id="LoginContainer">
       <div class="LoginWord">
@@ -78,12 +79,25 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .PagePic p {
+    text-align: center;
+    font-weight: lighter;
+    font-size: 60px;
+  }
+  .PagePic img {
+    display: block;
+    border-radius: 50%;
+    margin: 20px auto;
+  }
   #LoginContainer {
     text-align: center;
     width: 450px;
     margin: 50px auto;
+    border: 1px solid white;
+    background-color: rgba(255,255,255,0.3);
+    background: url("../assets/titlebac.jpg") no-repeat;
+    background-size: cover;
   }
-
   .LoginWord {
     padding-top: 30px;
     font-family: "San Francisco";
@@ -97,7 +111,7 @@
     height: 30px;
     border-radius: 15px;
     padding-left: 15px;
-    border: 1px solid transparent;
+    border: 1px solid darkgrey;
     transition: all .25s;
     font-size: 15px;
     line-height: 30px;
@@ -111,6 +125,7 @@
 
   #login-tools {
     margin-top: 10px;
+    margin-bottom: 40px;
   }
 
   a {

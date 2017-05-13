@@ -119,7 +119,7 @@
             <button class="deletebtn" @click="deleteFood(f.id)">{{ '删除' + f.name }}</button>
           </td>
           <td>
-            <button>修改</button>
+            <button class="modifybtn">修改</button>
           </td>
         </tr>
       </table>
@@ -219,6 +219,15 @@
     border-radius: 4px;
     font-weight: lighter;
   }
+  .modifybtn{
+    width: 80px;
+    height: 45px;
+    background-color: red;
+    border:1px solid white;
+    color: white;
+    border-radius: 4px;
+    font-weight: lighter;
+  }
   .turn-page-two {
     text-align: center;
   }
@@ -252,7 +261,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
+    width: 780px;
     border: 1px solid #ddd;
     overflow: hidden;
     padding-bottom: 20px;
@@ -274,6 +283,7 @@
   .food-add-list {
     width: 400px;
     margin: 0 auto;
+    overflow: hidden;
   }
 
   .food-add-list li label {
@@ -302,13 +312,13 @@
     font-size: 15px;
     padding: 5px 60px;
     border-radius: 4px;
-    border: 1px solid #666;
     float: right;
-    margin-right: 325px;
+    border: 1px solid #666;
+    margin-right:325px;
     background-color: transparent;
   }
   .save:hover{
-    background-color: #333;
+    background-color: #eee;
   }
 
 
