@@ -7,22 +7,15 @@
       SlideMenu,
     },
     data: () => ({
-      search: '',
       myData: [],
       serverFoods: [],
       keyword: '',
       DEFAULT_PREVIEW: 'http://static.wittsay.cc/FomxkE8fjhGKNIOMv-rFOmeRDgmA',
+      total: 0,
+      page: 1,
     }),
     mounted () {
-      API.get('foods')
-        .then(json => {
-          if (json && json.length) {
-            this.serverFoods = json.map(v => {
-              v.num = 0
-              return v
-            })
-          }
-        })
+      this.getFood()
     },
     methods: {
       count(isAdd, index) {
@@ -33,10 +26,46 @@
           return v
         })
       },
-      searchInput: function(key) {
-      },
       goNext(path) {
         this.$router.push({path: path})
+      },
+      getFood() {
+        API.getNative(`foods?page=${this.page}&pre_page=16`)
+          .then(res => {
+            this.total = res.headers.get('total')
+            return res.json()
+          })
+          .then(json => {
+            if (json && json.length) {
+              this.serverFoods = json.map(v => {
+                v.num = 0
+                return v
+              })
+            }
+          })
+      },
+      nextPage(num) {
+        const page = ~~(this.total / 14) + 1
+        if (this.page + num > 0 && this.page + num <= page) {
+          this.page = this.page + num
+          this.getFood()
+        }
+      },
+      search() {
+        this.page = 1
+        if (!this.keyword) {
+          return this.getFood()
+        }
+        API.getNative(`foods/${this.keyword}/search?page=${this.page}&pre_page=16`)
+          .then(res => {
+            this.total = res.headers.get('total')
+            return res.json()
+          })
+          .then(json => {
+            if (json && json.length) {
+              this.serverFoods = json
+            }
+          })
       },
     },
   }
@@ -46,8 +75,7 @@
   <div>
     <SlideMenu :foods="serverFoods"></SlideMenu>
     <div class="search-container">
-      <input type="text" class="search-box" v-model="keyword" placeholder="搜索食物">
-      <button @click="searchInput(keyword)">搜索</button>
+      <input type="text" class="search-box" v-model="keyword" @keydown="search" placeholder="输入关键字搜索食物" />
       <a class="history" @click="goNext('historyadd')">查看历史纪录</a>
     </div>
     <fieldset class="food-title">添加今日饮食</fieldset>
@@ -62,6 +90,12 @@
         </div>
       </li>
     </ul>
+    <div class="turn-next">
+      <button @click="nextPage(-1)">上一页</button>
+      <span>第 {{page}} 页</span>
+      <button @click="nextPage(1)">下一页</button>
+      <p>(共{{~~(total / 14) + 1}}页)</p>
+    </div>
   </div>
 </template>
 
@@ -70,18 +104,29 @@
   .search-container {
     overflow: hidden;
     width: 500px;
-    margin: 10px auto;
+    margin: 45px auto;
   }
 
   .search-box {
     width: 325px;
     font-size: 15px;
-    padding-left: 6px;
     line-height: 35px;
-    margin-top: 30px;
     font-weight: lighter;
     color: #333;
-
+    display: block;
+    margin: 10px auto;
+    border: none;
+    background: transparent;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    transition: all .4s;
+    font-weight: 300;
+  }
+  .search-box:focus {
+    outline: none;
+  }
+  .search-box:hover {
+    border-color: #8CD4F5;
   }
 
   .search-container button {
@@ -171,15 +216,27 @@
   }
 
   .history {
-    float: right;
     color: lightgrey;
     font-weight: lighter;
     font-size: small;
-    margin-top: -16px;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
   }
 
   .history:hover {
     color: black;
+  }
+  .turn-next {
+    text-align: center;
+    margin: 0 auto;
+  }
+  .turn-next button {
+    border-radius: 4px;
+    padding: 3px 5px;
+    border: 1px solid darkgrey;
+    background-color: transparent;
+    font-size: 15px;
   }
 
 

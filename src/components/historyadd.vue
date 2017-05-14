@@ -8,29 +8,42 @@
       return {
         diets: [],
         total: 0,
+        page: 1,
      }
     },
     mounted() {
-      API.getNative('diet')
-        .then(res => {
-          this.total = res.headers.get('total')
-          return res.json()
-        })
-        .then(json => {
-        if (json && json.length) {
-            return this.diets = json.map(v => {
-              let energy = 0
-              if (v.foods && v.foods.length) {
-                v.foods.forEach(f => {
-                  energy += f.energy * f.num
-                })
-              }
-              v.energy = energy
-              return v
-            })
-          }
-          swal('暂无信息', '没有查询到与您有关的饮食信息！', 'error')
-        })
+      this.getDiets()
+    },
+    methods: {
+      getDiets() {
+        API.getNative(`diet?page=${this.page}`)
+          .then(res => {
+            this.total = res.headers.get('total')
+            return res.json()
+          })
+          .then(json => {
+            if (json && json.length) {
+              return this.diets = json.map(v => {
+                let energy = 0
+                if (v.foods && v.foods.length) {
+                  v.foods.forEach(f => {
+                    energy += f.energy * f.num
+                  })
+                }
+                v.energy = energy
+                return v
+              })
+            }
+            swal('暂无信息', '没有查询到与您有关的饮食信息！', 'error')
+          })
+      },
+      nextPage(num) {
+        const page = ~~(this.total / 14) + 1
+        if (this.page + num > 0 && this.page + num <= page) {
+          this.page = this.page + num
+          this.getDiets()
+        }
+      },
     },
     filters: {
       formatTime(str) {
@@ -42,14 +55,14 @@
 
 <template>
   <div class="page1">
-    <p>查看近期摄入热量</p>
+    <p class="title">查看近期摄入热量</p>
     <table class="food-form">
       <thead>
       <tr>
         <th>时间</th>
-        <th>今日摄入热量</th>
+        <th>摄入热量</th>
         <th>医生建议</th>
-        <th>了解详细</th>
+        <th>详细</th>
       </tr>
       </thead>
       <tbody>
@@ -66,10 +79,10 @@
       </tbody>
     </table>
     <div class="turn-next">
-      <span>上一页</span>
-      <span>第 1 页</span>
-      <span>下一页</span>
-      <span>(共{{~~(total / 14) + 1}}页)</span>
+      <button @click="nextPage(-1)">上一页</button>
+      <span>第 {{page}} 页</span>
+      <button @click="nextPage(1)">下一页</button>
+      <p>(共{{~~(total / 14) + 1}}页)</p>
     </div>
     <div class="details"></div>
   </div>
@@ -77,12 +90,14 @@
 
 <style scoped>
   .page1{
-    width:700px;
+    min-width:850px;
+    width: 90%;
+    max-width: 1150px;
     border:1px solid #ddd;
     min-height:700px;
     margin:40px auto 70px auto;
   }
-  .page1 p{
+  .title{
     margin-left: 70px;
   }
 
@@ -94,7 +109,7 @@
   .food-form th,.food-form td{
     border:1px solid #ddd;
     font-size: 1em;
-    padding:5px 7px 4px 7px;
+    padding:8px 7px;
     text-align: center;
   }
   .food-form th{
@@ -106,6 +121,13 @@
   }
   .turn-next {
     text-align: center;
+  }
+  .turn-next button {
+    border-radius: 4px;
+    padding: 3px 5px;
+    border: 1px solid darkgrey;
+    background-color: transparent;
+    font-size: 15px;
   }
 
 

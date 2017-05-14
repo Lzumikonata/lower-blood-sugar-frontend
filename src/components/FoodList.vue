@@ -322,7 +322,6 @@
     border: 1px solid darkgrey;
     background-color: transparent;
     font-size: 15px;
-
   }
 
   .upload-pic {
