@@ -13,6 +13,7 @@
       updateID: null,
       page: 1,
       total: 0,
+      keyword: '',
       food: {
         name: '',
         energy: '',
@@ -142,6 +143,22 @@
           this.page = this.page + num
           this.getFood()
         }
+      },
+      search() {
+        this.page = 1
+        if (!this.keyword) {
+          return this.getFood()
+        }
+        API.getNative(`foods/${this.keyword}/search?page=${this.page}`)
+          .then(res => {
+            this.total = res.headers.get('total')
+            return res.json()
+          })
+          .then(json => {
+            if (json && json.length) {
+              this.serverFoods = json
+            }
+          })
       }
     },
   }
@@ -153,8 +170,7 @@
     <div class="list-content">
       <button class="food-add" @click="showAddFood(true)">添加食物</button>
       <div class="search-food">
-        <input type="text">
-        <button>搜索</button>
+        <input type="text" v-model="keyword" @keydown="search" placeholder="输入食物关键字">
       </div>
       <table class="foodlist">
         <thead>
