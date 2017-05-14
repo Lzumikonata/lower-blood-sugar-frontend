@@ -1,9 +1,26 @@
-<script>
-  import { API } from '../services/api'
-  import store from 'store'
-  import swal from 'sweetalert'
-  import { Event } from '../services/event'
+<template>
+  <div id="LoginPage">
+    <div id="PagePic">
+      <h1>{{msg}}</h1>
+    </div>
+    <div id="LoginContainer">
+      <div class="LoginWord">
+        <p>登录你的账号</p>
+      </div>
+      <input id="UserName" type="text" placeholder="请输入用户名" v-model="username"><br>
+      <input id="PassWord" type="password" placeholder="请输入密码" v-model="password"><br>
+      <div id="login-tools">
+        <a class="loginbtn" @click="login">登录</a>
+        <a class="registerpage" @click="goRegister('register')">注册</a>
+      </div>
+    </div>
+  </div>
+</template>
 
+<script>
+  import {API} from '../services/api'
+  import store from 'store'
+  console.log(store.get('user'));
   export default {
     name: 'PagePic',
     data () {
@@ -26,48 +43,42 @@
         API.post('session', {
           email: this.username,
           password: this.password,
+        }).then(res => {
+          return res.json()
+        }).then(json => {
+          if (json && json.user) {
+            store.set('user', json.user)
+            return this.$router.push({
+              path: 'member',
+              params: {
+                username: this.username,
+              },
+            })
+          }
+          alert(json.message)
         })
-          .then(json => {
-            if (json && json.user) {
-              store.set('user', json.user)
-              Event.$emit('USER_LOGIN', { isAdmin: json.user && json.user.userType === 'admin' })
-
-              return this.$router.push({
-                path: 'member',
-                params: {
-                  username: this.username,
-                },
-              })
-            }
-            swal('登录失败', json.message, 'error')
-          })
+//        fetch('http://wittsay.cc/v1/session', {
+//          method: 'POST',
+//          mode: 'cors',
+//          redirect: 'follow',
+//          body: JSON.stringify({
+//            email: this.username,
+//            password: this.password,
+//          }),
+//        }).then(res => {
+//          return res.json()
+//        }).then(json => {
+//          alert(json.message)
+//        })
       },
       goRegister: function (path) {
-        this.$router.push({ path: path })
+        this.$router.push({path: path})
       },
     },
   }
 </script>
 
-<template>
-  <div id="LoginPage">
-    <div id="PagePic">
-      <h1>{{msg}}</h1>
-    </div>
-    <div id="LoginContainer">
-      <div class="LoginWord">
-        <p>登录你的账号</p>
-      </div>
-      <input id="UserName" type="text" placeholder="请输入用户名" v-model="username"><br>
-      <input id="PassWord" type="password" placeholder="请输入密码" v-model="password"><br>
-      <div id="login-tools">
-        <a class="loginbtn" @click="login">登录</a>
-        <a class="registerpage" @click="goRegister('register')">注册</a>
-      </div>
-    </div>
-  </div>
-</template>
-
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   #LoginContainer {
     text-align: center;

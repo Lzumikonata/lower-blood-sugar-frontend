@@ -7,7 +7,6 @@ import Register from '../components/Register.vue'
 import Modify from '../components/Modify'
 import historyAdd from '../components/historyadd.vue'
 import FoodList from '../components/FoodList.vue'
-import DietList from '../components/DietList.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -46,11 +45,6 @@ export default new Router({
       path: '/foodlist',
       name: 'foodlist',
       component: FoodList,
-    },
-    {
-      path: '/dietList',
-      name: 'dietList',
-      component: DietList,
     },
   ],
 })

@@ -1,6 +1,4 @@
 <script>
-  import {API} from '../services/api.js'
-  import swal from 'sweetalert'
   export default {
     props: {
       foods: {
@@ -10,68 +8,20 @@
     },
     data: () => ({
       slideToggle: false,
-      time: 'breakfast',
-      inquiry: '',
+      filterFoods: [],
     }),
     mounted () {
-    },
-    computed: {
-      filterFoods: function() {
-        return this.foods
-      }
+      console.log(this.foods);
     },
     methods: {
       toggleView () {
         this.slideToggle = !this.slideToggle
       },
-      count(isAdd, index) {
-        const foods = this.foods.map((v, i) => {
-          if (i === index){
-            isAdd? v.num++: (v.num <= 0? v.num = 0: v.num--)
-          }
-          return v
-        })
-      },
-      submit() {
-        let newFoods = []
-        this.foods.forEach(food => {
-          if (food.num > 0){
-            newFoods.push({
-              id: food.id,
-              num: food.num,
-            })
-          }
-        })
-        if (newFoods.length === 0){
-          return swal('添加失败', '请至少添加一个食物！', 'error');
-        }
-
-        API.post('diet', {
-          foods: newFoods,
-          time: this.time,
-          inquiry: this.inquiry,
-        })
-          .then(json => {
-            if (json && json.id) {
-              // 重置数据
-              this.foods.forEach(food => {
-                food.num = 0
-              })
-              swal('提交成功', '您的信息已经被记录！', 'success')
-              return this.$router.push({path: 'historyadd'})
-            }
-          })
-      },
-      close() {
-        this.slideToggle = false
-      }
-
     },
   }
 </script>
 <template>
   <div :class="['sidebar-content', {show: slideToggle}]">
-    <div :class="['bg', {showBg: slideToggle}]" @click="close"></div>
   <div class="sidebar" @click="toggleView">
     <span>今日饮食</span>
   </div>
@@ -80,20 +30,20 @@
         <h2>已添加的饮食：</h2>
       </div>
       <ul class="addfood-list">
-        <li v-for="(food, index) in filterFoods" v-if="food.num > 0">
+        <li v-for="food in foods" v-if="food.num > 0">
           <div class="addfood-list-name">
             <span>{{food.name}}</span>
-            <span>{{food.energy}}</span>
+            <span>100</span>
           </div>
           <div class="addfood-list-count">
-            <span class="add" @click="count(true, index)">+</span>
+            <span class="add">+</span>
             <span class="val">{{food.num}}</span>
-            <span class="minus" @click="count(false, index)">-</span>
+            <span class="minus">-</span>
           </div>
         </li>
       </ul>
       <div class="addfood-btn">
-        <button class="submit" @click="submit">完成</button>
+        <button class="submit">submit</button>
       </div>
     </div>
   </div>
@@ -108,24 +58,11 @@
     height:100%;
     width:335px;
     overflow: hidden;
-    transition: all .35s ease-in-out;
+    transition: all .45s ease-in-out;
     background: #e6e6e6;
   }
   .show {
     right: 0;
-  }
-  .bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    background: rgba(0, 0, 0, 0.25);
-    display: none;
-  }
-  .showBg {
-    display: block;
   }
   .sidebar {
     width:35px;
@@ -140,27 +77,20 @@
     -ms-user-select: none;
     user-select: none;
     background-color: #504d53;
-    position: relative;
-    z-index: 210;
   }
   .sidebar span {
-    position: absolute;
     display: block;
     color: #ccc;
     padding:10px 5px;
     line-height: 20px;
-    border: 1px solid grey;
-    text-align: center;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    border-top: 2px solid grey;
+    border-bottom: 2px solid grey;
+    margin-top: 250px;
   }
   .addfood {
     height:100%;
     width:300px;
     float: right;
-    position: relative;
-    z-index: 210;
   }
   .title {
     width: 100%;
@@ -177,7 +107,7 @@
   }
   .addfood-btn {
     position: absolute;
-    left: 0;
+    left: 35px;
     bottom: 0;
     right: 0;
     padding: 35px 0 20px 0;

@@ -1,42 +1,13 @@
-<script>
-  import { API } from './services/api'
-  import swal from 'sweetalert'
-  import { Event } from './services/event'
-
-  export default {
-    data: () => ({
-      isAdmin: false
-    }),
-    mounted() {
-      Event.$on('USER_LOGIN', ({ isAdmin }) => {
-        this.isAdmin = isAdmin
-      })
-    },
-    methods: {
-      goNext: function (path) {
-        this.$router.push({ path: path })
-      },
-    },
-
-  }
-</script>
-
 <template>
   <div id="app">
     <header class="home-header">
-      <a class="header-title" @click="goNext('')">糖尿病饮食管理</a>
+      <a class="header-title">糖尿病饮食管理</a>
       <ul class="header-nav">
-        <li class="nav-item" @click="goNext('/dietlist')" v-if="isAdmin">
-          饮食管理
-        </li>
-        <li class="nav-item" @click="goNext('/foodlist')" v-if="isAdmin">
-          食物管理
-        </li>
-        <li class="nav-item" @click="goNext('/')">
+        <li class="nav-item" @click="goHello('/')">
           吃了什么
         </li>
-        <li class="nav-item" @click="goNext('historyadd')">
-          历史纪录
+        <li class="nav-item" @click="goHistoryadd('historyadd')">
+          折线图
         </li>
         <li class="nav-item" @click="goNext('member')">
           个人中心
@@ -49,6 +20,27 @@
   </div>
 </template>
 
+<script>
+  export default {
+    data () {
+      return {
+      }
+    },
+    methods: {
+      goNext: function (path) {
+        this.$router.push({path: path})
+      },
+      goHello: function (path) {
+        this.$router.push({path: path})
+      },
+      goHistoryadd: function (path) {
+        this.$router.push({path: path})
+      }
+    },
+
+  }
+</script>
+
 <style scoped>
   #app {
     min-height: 100%;
@@ -58,16 +50,18 @@
     background: whitesmoke;
   }
 
+
+
   /*标题和导航*/
   .home-header {
     position: fixed;
     height: 50px;
-    z-index: 50;
+    z-index: 99;
     left: 0;
     right: 0;
     top: 0;
     overflow: hidden;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0,0,0,0.1);
     padding: 0 40px;
     border-bottom: 1px solid #eee;
     font-family: "Helvetica Neue", Helvetica, sans-serif;
@@ -107,22 +101,14 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    transition: all .25s;
   }
-
-  .header-nav li:hover {
-    color: rgb(134, 204, 235);
-    border: 1px solid rgb(134, 204, 235);
-  }
-
   .header-nav li :hover {
     border-color: #333;
   }
-
   .content {
     width: 100%;
     min-height: 100%;
     padding-top: 50px;
-    height: 100vh;
+    padding-bottom: 50px;
   }
 </style>
