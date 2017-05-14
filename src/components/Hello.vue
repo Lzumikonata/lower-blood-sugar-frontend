@@ -1,3 +1,4 @@
+
 <script>
   import SlideMenu from './SlideMenu.vue'
   import {API} from '../services/api.js'
@@ -149,6 +150,10 @@
     background: white;
     border: 1px solid #e5e5e5;
   }
+  .search-btn:hover{
+    background-color: #27ae60;
+    color: white;
+  }
 
   .food-list {
     min-width: 860px;
@@ -221,6 +226,7 @@
     margin-top: 20px;
     text-align: center;
     border: 1px solid #e5e5e5;
+    background: url("../assets/titlebac.jpg");
   }
 
   .history {

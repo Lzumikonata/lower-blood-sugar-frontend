@@ -329,7 +329,6 @@
     font-size: 15px;
     padding: 8px 12px;
   }
-
   .turn-page-two {
     text-align: center;
   }
@@ -467,13 +466,18 @@
     font-size: 15px;
     padding: 5px 60px;
     border-radius: 4px;
+
     border: 1px solid #666;
     margin: 25px auto;
     display: block;
+
+    float: right;
+    margin-right:325px;
+
     background-color: transparent;
   }
   .save:hover{
-    background-color: #333;
+    background-color: #eee;
   }
 
 
