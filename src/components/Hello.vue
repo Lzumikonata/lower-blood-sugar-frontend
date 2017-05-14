@@ -15,7 +15,15 @@
       page: 1,
     }),
     mounted () {
-      this.getFood()
+      API.get('session')
+        .then(res =>{
+          // 未登录跳转登录页
+          if (!res || !res.id) {
+            swal('身份验证失败...', '请先前往登录页登录！', 'error');
+            return this.$router.push({path: 'login'})
+          }
+          this.getFood()
+        })
     },
     methods: {
       count(isAdd, index) {

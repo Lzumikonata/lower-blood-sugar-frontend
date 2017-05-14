@@ -8,18 +8,6 @@
       isAdmin: false
     }),
     mounted() {
-      API.get('session')
-        .then(user => {
-          // 未登录跳转登录页
-          if (!user || !user.id) {
-            swal('身份验证失败...', '请先前往登录页登录！', 'error')
-            return this.$router.push({ path: 'login' })
-          }
-          if (user && user.userType === "admin") {
-            this.isAdmin = true
-          }
-          this.user = Object.assign({}, this.user, user)
-        })
       Event.$on('USER_LOGIN', ({ isAdmin }) => {
         this.isAdmin = isAdmin
       })
@@ -135,6 +123,6 @@
     width: 100%;
     min-height: 100%;
     padding-top: 50px;
-    padding-bottom: 50px;
+    height: 100vh;
   }
 </style>

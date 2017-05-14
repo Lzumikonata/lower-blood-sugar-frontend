@@ -25,21 +25,31 @@
     },
     mounted () {
       API.get('session')
-        .then(user => {
-          if (user && user.id) {
-            this.user = user
+        .then(res =>{
+          // 未登录跳转登录页
+          if (!res || !res.id) {
+            swal('身份验证失败...', '请先前往登录页登录！', 'error');
+            return this.$router.push({path: 'login'})
           }
+          this.user = res
         })
-      Event.$on('IMAGE_UPLOAD_SUCCESS', ({url}) => {
-        API.put('user', { avatar: url})
+      Event.$on('IMAGE_UPLOAD_SUCCESS', ({ url }) => {
+        API.put('user', { avatar: url })
           .then(json => {
             this.user = json
           })
       })
     },
     methods: {
-      goModify: function (path) {
+      goModify(path) {
         this.$router.push({ path: path })
+      },
+      logout() {
+        API.delete('session')
+          .then(res => {
+          })
+        store.clearAll()
+        this.$router.push({ path: 'register' })
       },
     },
   }
@@ -67,12 +77,16 @@
       </ul>
       <button class="user-change" @click="goModify('modify')">修改详细资料</button>
     </div>
+    <div class="logout" @click="logout">
+      <span>注销登录</span>
+    </div>
   </div>
 </template>
 
 <style scoped>
   .content {
     background: url('../assets/timg.jpeg') no-repeat;
+    background-size: cover;
   }
 
   .content p {
@@ -127,6 +141,7 @@
     -ms-user-select: none;
     user-select: none;
   }
+
   .user-upload:hover {
     border: 1px solid rgb(134, 204, 235);
     color: rgb(134, 204, 235);
@@ -183,9 +198,30 @@
     color: #fff;
     transition: all .3s;
   }
+
   .user-change:hover {
     color: rgb(134, 204, 235);
     background-color: rgba(255, 255, 255, .65);
     border: 1px solid rgb(134, 204, 235);
+  }
+
+  .logout {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: #adadad;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: all .3s ease-in-out;
+    font-weight: 300;
+  }
+
+  .logout:hover {
+    color: #333;
   }
 </style>

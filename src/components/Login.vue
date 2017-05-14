@@ -30,7 +30,7 @@
           .then(json => {
             if (json && json.user) {
               store.set('user', json.user)
-              Event.$emit('USER_LOGIN', { isAdmin: user && user.userType === 'admin' })
+              Event.$emit('USER_LOGIN', { isAdmin: json.user && json.user.userType === 'admin' })
 
               return this.$router.push({
                 path: 'member',
@@ -41,19 +41,6 @@
             }
             swal('登录失败', json.message, 'error')
           })
-        //        fetch('http://wittsay.cc/v1/session', {
-        //          method: 'POST',
-        //          mode: 'cors',
-        //          redirect: 'follow',
-        //          body: JSON.stringify({
-        //            email: this.username,
-        //            password: this.password,
-        //          }),
-        //        }).then(res => {
-        //          return res.json()
-        //        }).then(json => {
-        //          alert(json.message)
-        //        })
       },
       goRegister: function (path) {
         this.$router.push({ path: path })
