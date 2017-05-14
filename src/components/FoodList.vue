@@ -190,10 +190,10 @@
           <td>{{ f.energy }}</td>
           <td>{{ f.describe ? f.describe : '暂无建议' }}</td>
           <td>
-            <button class="deletebtn" @click="deleteFood(f.id)">{{ '删除' + f.name }}</button>
+            <button class="deleteBtn" @click="deleteFood(f.id)">删除</button>
           </td>
           <td>
-            <button @click="updateFood(f)">修改</button>
+            <button class="updateBtn" @click="updateFood(f)">修改</button>
           </td>
         </tr>
       </table>
@@ -256,12 +256,20 @@
   }
 
   .search-food input {
-    font-size: 18px;
+    font-size: 15px;
     line-height: 18px;
     width: 275px;
-    padding: 7px;
-    border-radius: 4px;
-    border: 1px solid darkgrey;
+    padding: 5px 8px;
+    border-radius: 3px;
+    border: 1px solid #eee;
+    font-weight: 300;
+    transition: all .35s ease-in-out;
+  }
+  .search-food input:focus {
+    outline: none;
+  }
+  .search-food input:hover {
+    border-color: #8CD4F5;
   }
 
   .search-food button {
@@ -303,15 +311,25 @@
   .suggestion{
     width: 150px;
   }
-  .deletebtn{
-    width: 80px;
-    height: 45px;
-    background-color: #27ae60;
+  .deleteBtn{
+    background: #C1C1C1;
     border:1px solid white;
     color: white;
     border-radius: 4px;
     font-weight: lighter;
+    font-size: 15px;
+    padding: 8px 12px;
   }
+  .updateBtn {
+    background: #8CD4F5;
+    border:1px solid white;
+    color: white;
+    border-radius: 4px;
+    font-weight: lighter;
+    font-size: 15px;
+    padding: 8px 12px;
+  }
+
   .turn-page-two {
     text-align: center;
   }

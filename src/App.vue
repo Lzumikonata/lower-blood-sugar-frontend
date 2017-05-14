@@ -1,3 +1,38 @@
+<script>
+  import { API } from './services/api'
+  import swal from 'sweetalert'
+  import { Event } from './services/event'
+
+  export default {
+    data: () => ({
+      isAdmin: false
+    }),
+    mounted() {
+      API.get('session')
+        .then(user => {
+          // 未登录跳转登录页
+          if (!user || !user.id) {
+            swal('身份验证失败...', '请先前往登录页登录！', 'error')
+            return this.$router.push({ path: 'login' })
+          }
+          if (user && user.userType === "admin") {
+            this.isAdmin = true
+          }
+          this.user = Object.assign({}, this.user, user)
+        })
+      Event.$on('USER_LOGIN', ({ isAdmin }) => {
+        this.isAdmin = isAdmin
+      })
+    },
+    methods: {
+      goNext: function (path) {
+        this.$router.push({ path: path })
+      },
+    },
+
+  }
+</script>
+
 <template>
   <div id="app">
     <header class="home-header">
@@ -13,7 +48,7 @@
           吃了什么
         </li>
         <li class="nav-item" @click="goNext('historyadd')">
-          折线图
+          历史纪录
         </li>
         <li class="nav-item" @click="goNext('member')">
           个人中心
@@ -25,36 +60,6 @@
     </div>
   </div>
 </template>
-
-<script>
-  import {API} from './services/api'
-  import swal from 'sweetalert'
-  export default {
-    data: () => ({
-      isAdmin: false
-    }),
-    mounted() {
-      API.get('session')
-        .then(user =>{
-          // 未登录跳转登录页
-          if (!user || !user.id) {
-            swal('身份验证失败...', '请先前往登录页登录！', 'error')
-            return this.$router.push({path: 'login'})
-          }
-          if (user && user.userType === "admin") {
-            this.isAdmin = true
-          }
-          this.user = Object.assign({}, this.user, user)
-        })
-    },
-    methods: {
-      goNext: function (path) {
-        this.$router.push({ path: path })
-      },
-    },
-
-  }
-</script>
 
 <style scoped>
   #app {
@@ -116,6 +121,7 @@
     user-select: none;
     transition: all .25s;
   }
+
   .header-nav li:hover {
     color: rgb(134, 204, 235);
     border: 1px solid rgb(134, 204, 235);

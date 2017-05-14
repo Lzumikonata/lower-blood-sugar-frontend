@@ -20,7 +20,7 @@
           target: '',
           avatar: '',
         },
-        DEFAULT_AVATAR: 'https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/a833e6b2a1e69c89e889b2e5bda9e79a84e68891e5928c793e'
+        DEFAULT_AVATAR: 'http://static.wittsay.cc/FomxkE8fjhGKNIOMv-rFOmeRDgmA'
       }
     },
     mounted () {
