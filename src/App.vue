@@ -69,7 +69,7 @@
   .home-header {
     position: fixed;
     height: 50px;
-    z-index: 99;
+    z-index: 50;
     left: 0;
     right: 0;
     top: 0;
