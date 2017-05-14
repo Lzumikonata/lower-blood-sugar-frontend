@@ -1,11 +1,60 @@
+<script>
+  import { API } from '../services/api'
+  import store from 'store'
+  import UploadImage from './uploadImage.vue'
+  import { Event } from '../services/event'
+  export default {
+    components: {
+      'upload-image': UploadImage
+    },
+    data () {
+      return {
+        user: {
+          username: '',
+          gender: 'man',
+          weight: '',
+          height: '',
+          age: '',
+          bloodSugar: '',
+          bloodPressure: '',
+          target: '',
+          avatar: '',
+        },
+        DEFAULT_AVATAR: 'https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/a833e6b2a1e69c89e889b2e5bda9e79a84e68891e5928c793e'
+      }
+    },
+    mounted () {
+      API.get('session')
+        .then(user => {
+          if (user && user.id) {
+            this.user = user
+          }
+        })
+      Event.$on('IMAGE_UPLOAD_SUCCESS', ({url}) => {
+        API.put('user', { avatar: url})
+          .then(json => {
+            this.user = json
+          })
+      })
+    },
+    methods: {
+      goModify: function (path) {
+        this.$router.push({ path: path })
+      },
+    },
+  }
+</script>
+
 <template>
   <div class="content">
     <p>要记得及时更新自己资料,方便医生查看喔~</p>
     <div class="user-message">
       <div class="user-header">
-        <img src="https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/a833e6b2a1e69c89e889b2e5bda9e79a84e68891e5928c793e"
+        <img :src="user.avatar ? user.avatar : DEFAULT_AVATAR"
              alt="">
-        <button>修改头像</button>
+        <div class="user-upload">
+          <upload-image></upload-image>
+        </div>
       </div>
       <ul class="user-list">
         <li><span class="left">姓名： {{user.username}}</span> <span class="right">性别:  {{user.gender === 'man' ? '男' : '女'}}</span>
@@ -20,45 +69,6 @@
     </div>
   </div>
 </template>
-<script>
-  import { API } from '../services/api'
-  import store from 'store'
-
-  export default {
-    data () {
-      return {
-        user: {
-          username: '',
-          gender: 'man',
-          weight: '',
-          height: '',
-          age: '',
-          bloodSugar: '',
-          bloodPressure: '',
-          target: ''
-        },
-      }
-    },
-    mounted () {
-      API.get('session')
-        .then(user => {
-          if (user && user.id) {
-            this.user = user
-          }
-        })
-      //      const user = store.get('user')
-      //      if (!user) {
-      //        return alert('您未登录，请前往登录！')
-      //      }
-      //      this.user = user
-    },
-    methods: {
-      goModify: function (path) {
-        this.$router.push({ path: path })
-      },
-    },
-  }
-</script>
 
 <style scoped>
   .content {
@@ -101,19 +111,25 @@
     margin: 0 auto;
   }
 
-  .user-header button {
-    border-radius: 4px;
+  .user-upload {
     font-size: 14px;
-    padding: 0 12px;
-    line-height: 20px;
-    border: 1px solid white;
     margin: 20px auto;
     display: block;
     background: transparent;
+    width: 100px;
+    height: 25px;
+    line-height: 25px;
+    border: 1px solid #666;
+    border-radius: 4px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
-
-  .user-header button:focus {
-    outline: none;
+  .user-upload:hover {
+    border: 1px solid rgb(134, 204, 235);
+    color: rgb(134, 204, 235);
   }
 
   .user-message {
