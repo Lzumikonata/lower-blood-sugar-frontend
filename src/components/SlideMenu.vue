@@ -123,15 +123,19 @@
     -ms-user-select: none;
     user-select: none;
     background-color: #504d53;
+    position: relative;
   }
   .sidebar span {
+    position: absolute;
     display: block;
     color: #ccc;
     padding:10px 5px;
     line-height: 20px;
     border: 1px solid grey;
-    margin-top: 250px;
     text-align: center;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
   .addfood {
     height:100%;

@@ -1,26 +1,3 @@
-<template>
-  <div>
-    <SlideMenu :foods="serverFoods"></SlideMenu>
-    <div class="search-container">
-      <input type="text" class="search-box" v-model="keyword" placeholder="搜索食物">
-      <button @click="searchInput(keyword)">搜索</button>
-      <a class="history" @click="goNext('historyadd')">查看历史纪录</a>
-    </div>
-    <fieldset class="food-title">添加今日饮食</fieldset>
-    <ul class="food-list">
-      <li v-for="(food, index) in serverFoods">
-        <img src="../assets/peach.jpg"/>
-        <div class="food-message">
-          <p class="food-name">{{food.name}}</p>
-          <p class="food-hot">热量：{{food.energy}} cal</p>
-          <div class="food-num"><a @click="count(false, index)">-</a><span> {{food.num}} </span>
-            <a @click="count(true, index)">+</a></div>
-        </div>
-      </li>
-    </ul>
-  </div>
-</template>
-
 <script>
   import SlideMenu from './SlideMenu.vue'
   import {API} from '../services/api.js'
@@ -34,17 +11,18 @@
       myData: [],
       serverFoods: [],
       keyword: '',
+      DEFAULT_PREVIEW: 'http://static.wittsay.cc/FomxkE8fjhGKNIOMv-rFOmeRDgmA',
     }),
     mounted () {
       API.get('foods')
         .then(json => {
-            if (json && json.length) {
-              this.serverFoods = json.map(v => {
-                v.num = 0
-                return v
-              })
-            }
-          })
+          if (json && json.length) {
+            this.serverFoods = json.map(v => {
+              v.num = 0
+              return v
+            })
+          }
+        })
     },
     methods: {
       count(isAdd, index) {
@@ -63,6 +41,29 @@
     },
   }
 </script>
+
+<template>
+  <div>
+    <SlideMenu :foods="serverFoods"></SlideMenu>
+    <div class="search-container">
+      <input type="text" class="search-box" v-model="keyword" placeholder="搜索食物">
+      <button @click="searchInput(keyword)">搜索</button>
+      <a class="history" @click="goNext('historyadd')">查看历史纪录</a>
+    </div>
+    <fieldset class="food-title">添加今日饮食</fieldset>
+    <ul class="food-list">
+      <li v-for="(food, index) in serverFoods">
+        <img :src="food.preview ? food.preview : DEFAULT_PREVIEW" draggable="false"/>
+        <div class="food-message">
+          <p class="food-name">{{food.name}}</p>
+          <p class="food-hot">热量：{{food.energy}} cal</p>
+          <div class="food-num"><a @click="count(false, index)">-</a><span> {{food.num}} </span>
+            <a @click="count(true, index)">+</a></div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
@@ -97,17 +98,23 @@
   }
 
   .food-list {
-    width: 900px;
+    min-width: 860px;
+    max-width: 1050px;
+    width: 85%;
     margin: 60px auto;
     overflow: hidden;
   }
 
   .food-list li {
-    width: 210px;
+    width: 25%;
     overflow: hidden;
-    border: 1px solid white;
+    border: 1px solid #f0f0f0;
     float: left;
-    margin: 8px 4px;
+    margin: 8px auto;
+  }
+  .food-list li img {
+    width: 210px;
+    height: 140px;
   }
 
   .food-message {
