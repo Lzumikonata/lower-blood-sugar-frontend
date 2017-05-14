@@ -1,3 +1,26 @@
+<script>
+  import { API } from './services/api'
+  import swal from 'sweetalert'
+  import { Event } from './services/event'
+
+  export default {
+    data: () => ({
+      isAdmin: false
+    }),
+    mounted() {
+      Event.$on('USER_LOGIN', ({ isAdmin }) => {
+        this.isAdmin = isAdmin
+      })
+    },
+    methods: {
+      goNext: function (path) {
+        this.$router.push({ path: path })
+      },
+    },
+
+  }
+</script>
+
 <template>
   <div id="app">
     <header class="home-header">
@@ -25,36 +48,6 @@
     </div>
   </div>
 </template>
-
-<script>
-  import {API} from './services/api'
-  import swal from 'sweetalert'
-  export default {
-    data: () => ({
-      isAdmin: false
-    }),
-    mounted() {
-      API.get('session')
-        .then(user =>{
-          // 未登录跳转登录页
-          if (!user || !user.id) {
-            swal('身份验证失败...', '请先前往登录页登录！', 'error')
-            return this.$router.push({path: 'login'})
-          }
-          if (user && user.userType === "admin") {
-            this.isAdmin = true
-          }
-          this.user = Object.assign({}, this.user, user)
-        })
-    },
-    methods: {
-      goNext: function (path) {
-        this.$router.push({ path: path })
-      },
-    },
-
-  }
-</script>
 
 <style scoped>
   #app {
@@ -113,6 +106,12 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    transition: all .25s;
+  }
+
+  .header-nav li:hover {
+    color: rgb(134, 204, 235);
+    border: 1px solid rgb(134, 204, 235);
   }
 
   .nav-item:hover {
@@ -124,6 +123,6 @@
     width: 100%;
     min-height: 100%;
     padding-top: 50px;
-    padding-bottom: 50px;
+    height: 100vh;
   }
 </style>

@@ -1,3 +1,4 @@
+
 <template>
   <div id="LoginPage">
     <div class="PagePic">
@@ -17,10 +18,12 @@
     </div>
   </div>
 </template>
-
 <script>
   import { API } from '../services/api'
   import store from 'store'
+  import swal from 'sweetalert'
+  import { Event } from '../services/event'
+
   export default {
     name: 'PagePic',
     data () {
@@ -47,6 +50,8 @@
           .then(json => {
             if (json && json.user) {
               store.set('user', json.user)
+              Event.$emit('USER_LOGIN', { isAdmin: json.user && json.user.userType === 'admin' })
+
               return this.$router.push({
                 path: 'member',
                 params: {
@@ -54,21 +59,8 @@
                 },
               })
             }
-            alert(json.message)
+            swal('登录失败', json.message, 'error')
           })
-        //        fetch('http://wittsay.cc/v1/session', {
-        //          method: 'POST',
-        //          mode: 'cors',
-        //          redirect: 'follow',
-        //          body: JSON.stringify({
-        //            email: this.username,
-        //            password: this.password,
-        //          }),
-        //        }).then(res => {
-        //          return res.json()
-        //        }).then(json => {
-        //          alert(json.message)
-        //        })
       },
       goRegister: function (path) {
         this.$router.push({ path: path })
@@ -77,7 +69,7 @@
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
   .PagePic p {
     text-align: center;

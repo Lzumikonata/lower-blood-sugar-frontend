@@ -43,7 +43,7 @@
           }
         })
         if (newFoods.length === 0){
-          return alert("没有食物");
+          return swal('添加失败', '请至少添加一个食物！', 'error');
         }
 
         API.post('diet', {
@@ -62,12 +62,16 @@
             }
           })
       },
+      close() {
+        this.slideToggle = false
+      }
 
     },
   }
 </script>
 <template>
   <div :class="['sidebar-content', {show: slideToggle}]">
+    <div :class="['bg', {showBg: slideToggle}]" @click="close"></div>
   <div class="sidebar" @click="toggleView">
     <span>今日饮食</span>
   </div>
@@ -104,11 +108,24 @@
     height:100%;
     width:335px;
     overflow: hidden;
-    transition: all .45s ease-in-out;
+    transition: all .35s ease-in-out;
     background: #e6e6e6;
   }
   .show {
     right: 0;
+  }
+  .bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: rgba(0, 0, 0, 0.25);
+    display: none;
+  }
+  .showBg {
+    display: block;
   }
   .sidebar {
     width:35px;
@@ -123,20 +140,27 @@
     -ms-user-select: none;
     user-select: none;
     background-color: #504d53;
+    position: relative;
+    z-index: 210;
   }
   .sidebar span {
+    position: absolute;
     display: block;
     color: #ccc;
     padding:10px 5px;
     line-height: 20px;
     border: 1px solid grey;
-    margin-top: 250px;
     text-align: center;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
   .addfood {
     height:100%;
     width:300px;
     float: right;
+    position: relative;
+    z-index: 210;
   }
   .title {
     width: 100%;
@@ -153,7 +177,7 @@
   }
   .addfood-btn {
     position: absolute;
-    left: 35px;
+    left: 0;
     bottom: 0;
     right: 0;
     padding: 35px 0 20px 0;
