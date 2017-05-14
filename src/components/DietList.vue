@@ -81,7 +81,8 @@
       </div>
       <table class="foodlist">
         <thead>
-        <th>用户名</th>
+        <th>用户</th>
+        <th>联系方式</th>
         <th>时间</th>
         <th>今日摄入热量</th>
         <th>详细</th>
@@ -89,6 +90,7 @@
         </thead>
         <tr v-for="d in diets">
           <td>{{d.member.username}}</td>
+          <td>{{d.member.phone ? d.member.phone : d.member.email}}</td>
           <td>{{d.createdAt | formatTime}}</td>
           <td>{{d.energy}}</td>
           <td>
@@ -114,8 +116,9 @@
 <style scoped>
   .list-content {
     border: 1px solid #ddd;
-    width: 780px;
-    height: 825px;
+    min-width: 850px;
+    max-height: 1250px;
+    width: 85%;
     margin: 40px auto;
   }
 
