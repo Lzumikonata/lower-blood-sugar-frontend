@@ -4,7 +4,7 @@
       <a class="header-title" @click="goNext('')">糖尿病饮食管理</a>
       <ul class="header-nav">
         <li class="nav-item" @click="goNext('/dietlist')" v-if="isAdmin">
-          食物管理
+          饮食管理
         </li>
         <li class="nav-item" @click="goNext('/foodlist')" v-if="isAdmin">
           食物管理
@@ -114,6 +114,11 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    transition: all .25s;
+  }
+  .header-nav li:hover {
+    color: rgb(134, 204, 235);
+    border: 1px solid rgb(134, 204, 235);
   }
 
   .header-nav li :hover {
